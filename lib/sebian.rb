@@ -35,6 +35,15 @@ module Sebian
       def split_message
         @lead.message.split(' - ')
       end
+
+      def separates_store_address
+        split_message[1] || ''
+      end
+
+      def emailize
+        separates_store_address.dup.force_encoding('UTF-8').unicode_normalize(:nfkd)
+                               .encode('ASCII', replace: '').downcase.gsub(/\W+/, '')
+      end
     end
   end
 end
